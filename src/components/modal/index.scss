@@ -1,0 +1,7 @@
+$width: calc(100% - 96px);
+
+.full_screen {
+    width: $width;
+    height: 100%;
+    margin-left: 96px;
+}
