@@ -2,10 +2,10 @@ import { FunctionComponent, ReactNode, createContext, useEffect, useState } from
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { db } from '../config/firebase'
 import { EMPTY_EVENT, EStatus, IEvent } from '../types/event.types'
-import { month, today } from '../helpers/getDate'
+import { month, today, year } from '../helpers/getDate'
 import { getSliceFormatDay, getSliceFormatMonth } from '../helpers/formatDate'
 import { useUser } from '../hooks/context/useUser'
-import { TEMPLATES_TYPES } from '../types/template.types'
+import { useCalendar } from '../hooks/context/useCalendar'
 
 interface IEventContext {
   dataList: IEvent[]
@@ -23,9 +23,19 @@ export const EventsContext = createContext({} as IEventContext)
 const EventsProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [dataList, setDataList] = useState([] as IEvent[])
-  const { id } = useUser()
+  const { id, user } = useUser()
+  const { date } = useCalendar()
 
   const [data, setData] = useState<IEvent>({ ...EMPTY_EVENT })
+
+  useEffect(() => {
+    setData({
+      ...data,
+      author: user?.name,
+      userId: user?.docId,
+      date: date || `${today}-${month}-${year}`,
+    })
+  }, [user])
 
   useEffect(() => {
     onSnapshot(query(collection(db, 'calendar'), where('userId', '==', id)), (snapshot) => {
