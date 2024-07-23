@@ -14,9 +14,9 @@ const SidebarFilter: FunctionComponent = () => {
   for (let i = 0; i < dataList.length; i++) {
     const element = dataList[i]
 
-    if (eventsObj[element?.templates]) {
-      eventsObj[element?.templates] = [...eventsObj[element?.templates], element]
-    } else eventsObj[element?.templates] = [element]
+    if (eventsObj[element?.type]) {
+      eventsObj[element?.type] = [...eventsObj[element?.type], element]
+    } else eventsObj[element?.type] = [element]
   }
 
   const handleChangeFilter = (mode: string) => {

@@ -43,7 +43,7 @@ const Search: FunctionComponent = () => {
           items={searchString ? searchResultTemplates : currentWeekTemplates}
           type={TYPE_ACTION_BUTTON.BTN}
           icon={<LuLayoutTemplate />}
-          link={''}
+          link={'template'}
           mode={MODE.LIST}
         />
       ) : null}
@@ -53,7 +53,7 @@ const Search: FunctionComponent = () => {
           items={searchString ? searchResultEvents : currentWeekEvents}
           type={TYPE_ACTION_BUTTON.BTN}
           icon={<CiStickyNote />}
-          link={''}
+          link={'event'}
           mode={MODE.LIST}
         />
       ) : null}

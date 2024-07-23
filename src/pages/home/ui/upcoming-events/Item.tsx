@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react'
-import { today } from '../../../../helpers/getDate'
 import { Link } from 'react-router-dom'
 import { IEvent } from '../../../../types/event.types'
 import classNames from 'classnames'
+import React from 'react'
 
 interface ItemProps {
   day: string
@@ -28,9 +28,12 @@ const Item: FunctionComponent<ItemProps> = ({
         <p>{date}</p>
       </div>
       <Link
-        to={'/event'}
+        to={'/calendar/event'}
         state={{ item: event }}
-        className={classNames(" pl-5 border-l-2 border-white/30 h-16", !timeEvent  && 'cursor-none pointer-events-none')}
+        className={classNames(
+          ' pl-5 border-l-2 border-white/30 h-16',
+          !timeEvent && 'cursor-none pointer-events-none'
+        )}
       >
         <p>{titleEvent || 'Empty'}</p>
         <p>{timeEvent}</p>

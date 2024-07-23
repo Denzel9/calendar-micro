@@ -27,7 +27,7 @@ const Item: FunctionComponent<ItemProps> = ({ event }) => {
       state={{ item: event }}
       className={classNames(
         ' py-5 pl-5 border-l hover:border-l-4 duration-300 ease-out block relative',
-        getColor[event?.templates]
+        getColor[event?.type]
       )}
     >
       <p className=" text-lg w-5/6">{capitalizeWord(event?.title)}</p>

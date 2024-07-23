@@ -40,7 +40,7 @@ const Trash: FunctionComponent = () => {
           title={'Events'}
           icon={<CiStickyNote />}
           items={trashEvents}
-          link={''}
+          link={'/calendar/event'}
           mode={MODE.CARD}
           type={TYPE_ACTION_BUTTON.TRASH}
         />
@@ -50,7 +50,7 @@ const Trash: FunctionComponent = () => {
           title={'Templates'}
           icon={<LuLayoutTemplate />}
           items={trashTemplates}
-          link={''}
+          link={'/calendar/templates'}
           mode={MODE.CARD}
           type={TYPE_ACTION_BUTTON.TRASH}
         />

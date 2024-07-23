@@ -11,23 +11,19 @@ import { useEventsService } from '../../hooks/services/useEventsService'
 import Comment from '../../components/new/Comment'
 import { useNoteContext } from '../../hooks/context/useNoteContext'
 import { UnionType } from '../../types/types'
+import React from 'react'
+import { IMedia } from '../../types/media.types'
 
 const Event: FunctionComponent = () => {
   const { state } = useLocation()
   const { updateEventComments, deleteEventComments } = useEventsService()
   const [event, setEvent] = useState<UnionType>(state && state?.item)
   const { comment, setComment } = useNoteContext()
-
+  const mediaEvent = event as unknown as IMedia
   const addComment = () => {
     setEvent({ ...event, comments: [...event?.comments, comment] })
-    updateEventComments(event?.docId, comment?.comment)
+    updateEventComments(event?.docId!, comment?.comment)
     setComment({ ...comment, comment: '' })
-  }
-
-  const deleteComment = (comment: string) => {
-    const newArr = event?.comments?.filter((el) => el.comment !== comment)
-    setEvent({ ...event, comments: newArr })
-    deleteEventComments(event?.docId, comment)
   }
 
   return (
@@ -38,7 +34,10 @@ const Event: FunctionComponent = () => {
       </div>
 
       <div className=" flex flex-col gap-3 mt-5 w-2/3 pb-32">
-        <PropirtiesList event={event as IEvent} setEvent={setEvent} />
+        <div className=" flex items-start gap-5">
+          <img src={mediaEvent?.img} alt="img" width={200} height={300} />
+          <PropirtiesList event={event as IEvent} setEvent={setEvent} />
+        </div>
 
         <Input
           icon={<FaRegUser />}
@@ -52,7 +51,7 @@ const Event: FunctionComponent = () => {
         <Comment
           data={event}
           setData={setEvent}
-          deleteFn={(comment: string) => deleteEventComments(event?.docId, comment)}
+          deleteFn={(comment: string) => deleteEventComments(event?.docId!, comment)}
         />
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { Dayjs } from 'dayjs'
 import { IComments } from './comments.types'
 import { EStatus } from './event.types'
+import { TEMPLATES_TYPES } from './template.types'
 
 export interface IMedia {
   author: string
@@ -16,7 +17,7 @@ export interface IMedia {
   comments: IComments[]
   docId?: string
   userId?: string
-  type?: string
+  type?: TEMPLATES_TYPES
 }
 
 export const EMPTY_MEDIA = {
@@ -30,4 +31,5 @@ export const EMPTY_MEDIA = {
   assign: [] as string[],
   tags: [] as string[],
   comments: [] as IComments[],
+  type: TEMPLATES_TYPES.FILMS,
 }

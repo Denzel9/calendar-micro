@@ -16,10 +16,12 @@ import { useUser } from '../../../hooks/context/useUser'
 import CustomSelect from '../../../components/CustomSelect'
 import { useTemplates } from '../../../hooks/context/useTemplates'
 import { names } from '../../../components/module/modals/note/Content'
+import { IMedia } from '../../../types/media.types'
+import { useMediaService } from '../../../hooks/services/useMediaService'
 
 interface PropirtiesListProps {
   event: IEvent
-  setEvent: (event: IEvent) => void
+  setEvent: (event: IEvent | IMedia) => void
 }
 
 const PropirtiesList: FunctionComponent<PropirtiesListProps> = ({ event, setEvent }) => {
@@ -27,6 +29,7 @@ const PropirtiesList: FunctionComponent<PropirtiesListProps> = ({ event, setEven
   const [isOpenTags, setIsOpenTags] = useState(false)
   const [isOpenAssign, setIsOpenAssign] = useState(false)
   const [isOpenTemplates, setIsOpenTemplates] = useState(false)
+  const [isOpenRate, setIsOpenRate] = useState(false)
   const {
     updateEventDate,
     updateEventTime,
@@ -36,10 +39,13 @@ const PropirtiesList: FunctionComponent<PropirtiesListProps> = ({ event, setEven
     updateEventTemplate,
     updateEventAssign,
   } = useEventsService()
+  const { updateMediaRate, updateMediaImage } = useMediaService()
   const { templates } = useTemplates()
   const { date } = useCalendar()
   const { user } = useUser()
   const { updateEventStatus } = useEventsService()
+  const mediaType = event?.type
+  const mediaEvent = event as unknown as IMedia
 
   return (
     <div className=" flex flex-col gap-1 w-full">
@@ -57,62 +63,116 @@ const PropirtiesList: FunctionComponent<PropirtiesListProps> = ({ event, setEven
         notEdit
       />
 
-      <PropirtyItem
-        title="Date"
-        value={event?.date}
-        onClick={() => {
-          setEvent({ ...event, date: date })
-          updateEventDate(event?.docId, date)
-        }}
-        withWidget
-        editElement={<Calendar style="absolute top-8" />}
-      />
+      {!mediaType && (
+        <PropirtyItem
+          title="Date"
+          value={event?.date}
+          onClick={() => {
+            setEvent({ ...event, date: date })
+            updateEventDate(event?.docId, date)
+          }}
+          withWidget
+          editElement={<Calendar style="absolute top-8" />}
+        />
+      )}
 
-      <PropirtyItem
-        title="Summary"
-        value={event?.text}
-        onClick={() => updateEventText(event?.docId, event?.text)}
-        onChange={() => setEvent({ ...event, text: '' })}
-        editElement={
-          <Input
-            value={event?.text}
-            placeholder={'Empty'}
-            onChange={(e) => setEvent({ ...event, text: e.target.value })}
-            style="w-full"
-          />
-        }
-      />
+      {!mediaType && (
+        <PropirtyItem
+          title="Summary"
+          value={event?.text}
+          onClick={() => updateEventText(event?.docId, event?.text)}
+          onChange={() => setEvent({ ...event, text: '' })}
+          editElement={
+            <Input
+              value={event?.text}
+              placeholder={'Empty'}
+              onChange={(e) => setEvent({ ...event, text: e.target.value })}
+              style="w-full"
+            />
+          }
+        />
+      )}
 
-      <Button
-        title={`${isOpen ? 'Hide' : 'Show'} more propirties`}
-        icon={isOpen ? <FaMinus /> : <MdAdd />}
-        onClick={() => setIsOpen(!isOpen)}
-        style="w-fit"
-        primary
-      />
-
-      {isOpen && (
+      {mediaType && (
         <>
           <PropirtyItem
-            title="Time"
-            value={event?.time.toString()}
-            withWidget
-            onChange={() => setEvent({ ...event, time: null })}
-            onClick={() =>
-              updateEventTime(
-                event?.docId,
-                `${event?.time?.hour()}:${getPadStartFormatDate(event?.time?.minute())}`
-              )
-            }
+            title="Link"
+            value={event?.link}
+            onClick={() => updateEventLink(event?.docId, event?.link)}
             editElement={
-              <div className=" absolute top-10 z-10 bg-dark border border-white rounded-xl">
-                <MUITimePicker
-                  value={(event?.time && dayjs(event?.time)) || null}
-                  setEvent={(e) => setEvent({ ...event, time: e })}
-                />
-              </div>
+              <Input
+                value={event?.link}
+                placeholder={'Empty'}
+                onChange={(e) => setEvent({ ...event, link: e.target.value })}
+                style="mt-0"
+              />
             }
           />
+          <PropirtyItem
+            title="Image link"
+            value={'link'}
+            onClick={() => updateMediaImage(event?.docId, mediaEvent?.img)}
+            editElement={
+              <Input
+                value={mediaEvent?.img}
+                placeholder={'Empty'}
+                onChange={(e) => setEvent({ ...mediaEvent, img: e.target.value })}
+                style="mt-0"
+              />
+            }
+          />
+          <PropirtyItem
+            title="Rate"
+            value={mediaEvent?.rate}
+            onClick={() => updateMediaRate(mediaEvent?.docId, mediaEvent?.rate)}
+            editElement={
+              <CustomSelect
+                isOpen={isOpenRate}
+                setIsOpen={setIsOpenRate}
+                data={mediaEvent}
+                setData={(el: string) => setEvent({ ...mediaEvent, rate: el })}
+                list={['1', '2', '3', '4', '5']}
+                value={mediaEvent?.rate}
+              />
+            }
+          />
+        </>
+      )}
+
+      {!mediaType && (
+        <Button
+          title={`${isOpen ? 'Hide' : 'Show'} more propirties`}
+          icon={isOpen ? <FaMinus /> : <MdAdd />}
+          onClick={() => setIsOpen(!isOpen)}
+          style="w-fit"
+          primary
+        />
+      )}
+
+      {!mediaType && isOpen && (
+        <>
+          {!mediaType && (
+            <PropirtyItem
+              title="Time"
+              value={event?.time.toString()}
+              withWidget
+              onChange={() => setEvent({ ...event, time: null })}
+              onClick={() =>
+                updateEventTime(
+                  event?.docId,
+                  `${event?.time?.hour()}:${getPadStartFormatDate(event?.time?.minute())}`
+                )
+              }
+              editElement={
+                <div className=" absolute top-10 z-10 bg-dark border border-white rounded-xl">
+                  <MUITimePicker
+                    value={(event?.time && dayjs(event?.time)) || null}
+                    setEvent={(e) => setEvent({ ...event, time: e })}
+                  />
+                </div>
+              }
+            />
+          )}
 
           <PropirtyItem
             title="Link"
@@ -127,6 +187,7 @@ const PropirtiesList: FunctionComponent<PropirtiesListProps> = ({ event, setEven
               />
             }
           />
+
           <PropirtyItem
             title="Assign"
             value={event?.assign}
@@ -146,6 +207,7 @@ const PropirtiesList: FunctionComponent<PropirtiesListProps> = ({ event, setEven
               />
             }
           />
+
           <PropirtyItem
             title="Tags"
             value={event?.tags}
@@ -167,16 +229,16 @@ const PropirtiesList: FunctionComponent<PropirtiesListProps> = ({ event, setEven
           />
           <PropirtyItem
             title="Template"
-            value={event?.templates}
-            onClick={() => updateEventTemplate(event?.docId, event?.templates)}
-            onChange={() => setEvent({ ...event, templates: event?.templates })}
+            value={event?.type}
+            onClick={() => updateEventTemplate(event?.docId, event?.type)}
+            onChange={() => setEvent({ ...event, type: event?.type })}
             editElement={
               <CustomSelect
                 isOpen={isOpenTemplates}
                 setIsOpen={setIsOpenTemplates}
-                value={event?.templates}
+                value={event?.type}
                 data={event}
-                setData={(el: string) => setEvent({ ...event, templates: el })}
+                setData={(el: string) => setEvent({ ...event, type: el })}
                 list={templates?.map((el) => el?.title)}
               />
             }

@@ -18,7 +18,7 @@ const DeskWeek: FunctionComponent<DeskWeekProps> = ({ item, events }) => {
         num={item.getDate()}
       />
       {events.map((el) => {
-        return filterCalendar.includes(el.templates) || filterCalendar.includes('All') ? (
+        return filterCalendar.includes(el.type) || filterCalendar.includes('All') ? (
           <CalendarItem key={Math.random()} item={el} />
         ) : null
       })}

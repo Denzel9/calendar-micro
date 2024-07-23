@@ -37,7 +37,7 @@ const EditingItem: FunctionComponent<PropirtyItemProps> = ({
   }
 
   const saveEdit = () => {
-   onClick && onClick()
+    onClick && onClick()
     setIsEdit(false)
   }
   const cancel = () => {

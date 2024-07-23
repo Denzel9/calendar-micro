@@ -7,18 +7,18 @@ import { IMedia } from '../../types/media.types'
 import { useUser } from '../context/useUser'
 import { useNoteContext } from '../context/useNoteContext'
 
-export const useBooksService = () => {
+export const useMediaService = () => {
   const { setIsLoading, isLoading } = useContext(EventsContext)
-  const {templateType} = useNoteContext()
+  const { templateType } = useNoteContext()
   const { user } = useUser()
 
-  const addBook = async (book: IMedia) => {
+  const addMedia = async (book: IMedia) => {
     setIsLoading(true)
     try {
       await addDoc(collection(db, 'media'), {
         ...book,
         userId: user?.docId,
-        type: templateType
+        type: templateType,
       })
     } catch (error: any) {
       console.log('Error add event:', error)
@@ -27,7 +27,7 @@ export const useBooksService = () => {
     }
   }
 
-  const deleteBook = async (id: string) => {
+  const deleteMedia = async (id: string) => {
     setIsLoading(true)
     try {
       await deleteDoc(doc(db, 'media', id))
@@ -38,7 +38,7 @@ export const useBooksService = () => {
     }
   }
 
-  const updateBookStatus = async (id: string, status: EStatus) => {
+  const updateMediaStatus = async (id: string, status: EStatus) => {
     setIsLoading(true)
 
     try {
@@ -52,10 +52,40 @@ export const useBooksService = () => {
     }
   }
 
+  const updateMediaRate = async (id: string, rate: string) => {
+    setIsLoading(true)
+
+    try {
+      await updateDoc(doc(db, 'media', id), {
+        rate,
+      })
+    } catch (error: any) {
+      console.log('Error update:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const updateMediaImage = async (id: string, img: string) => {
+    setIsLoading(true)
+
+    try {
+      await updateDoc(doc(db, 'media', id), {
+        img,
+      })
+    } catch (error: any) {
+      console.log('Error update:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
     isLoading,
-    addBook,
-    deleteBook,
-    updateBookStatus,
+    addMedia,
+    deleteMedia,
+    updateMediaStatus,
+    updateMediaRate,
+    updateMediaImage,
   }
 }

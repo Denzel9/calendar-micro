@@ -22,13 +22,17 @@ const SidebarCurrentEvent: FunctionComponent = () => {
       {currentEvent && (
         <div className=" flex items-center gap-3 mt-3">
           <Link
-            to={'/calendar/event'}
+            to={'calendar/event'}
             state={{ item: currentEvent }}
             className=" border border-blues text-white bg-blues rounded-lg px-4 py-2"
           >
             Детали
           </Link>
-          <ActionButton status={currentEvent?.status} id={currentEvent?.docId} type={TYPE_ACTION_BUTTON.BTN} />
+          <ActionButton
+            status={currentEvent?.status}
+            id={currentEvent?.docId}
+            type={TYPE_ACTION_BUTTON.BTN}
+          />
         </div>
       )}
       <img

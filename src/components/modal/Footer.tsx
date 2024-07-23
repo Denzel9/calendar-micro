@@ -4,9 +4,9 @@ import { useNoteContext } from '../../hooks/context/useNoteContext'
 import { useMain } from '../../hooks/context/useMain'
 import { EMPTY_EVENT, IEvent } from '../../types/event.types'
 import { UnionType } from '../../types/types'
-import { useBooksService } from '../../hooks/services/useBooksService'
+import { useMediaService } from '../../hooks/services/useMediaService'
 import { useEventsService } from '../../hooks/services/useEventsService'
-import { EMPTY_TEMPLATE, TEMPLATES_TYPES } from '../../types/template.types'
+import { EMPTY_TEMPLATE } from '../../types/template.types'
 import { EMPTY_MEDIA, IMedia } from '../../types/media.types'
 import { useTemplatesService } from '../../hooks/services/useTemplatesService'
 
@@ -20,7 +20,7 @@ const ModalFooter: FunctionComponent<ModalFooterProps> = ({ setClose, data, setD
   const { templateType, media } = useNoteContext()
   const { setError, dataList, templates } = useMain()
 
-  const { addBook } = useBooksService()
+  const { addMedia } = useMediaService()
   const { addEvent } = useEventsService()
   const { addTemplates } = useTemplatesService()
 
@@ -59,7 +59,7 @@ const ModalFooter: FunctionComponent<ModalFooterProps> = ({ setClose, data, setD
       if (findedBook) {
         setError('Finded some book')
       } else {
-        addBook(data as IMedia)
+        addMedia(data as IMedia)
         if (!findedTemplate)
           addTemplates({ ...EMPTY_TEMPLATE, type: templateType, title: templateType })
         setClose(false)

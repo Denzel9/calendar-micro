@@ -37,7 +37,7 @@ const Content: FunctionComponent = () => {
               return (
                 <Link
                   key={el.title}
-                  to={'/calendar/template'}
+                  to={'template'}
                   onClick={() => setIsOpenSidebarSheet(false)}
                   state={{ item: currentTemplate }}
                 >

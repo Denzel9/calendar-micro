@@ -18,7 +18,7 @@ const Home: FunctionComponent = () => {
           items={templates}
           type={TYPE_ACTION_BUTTON.BTN}
           mode={MODE.CARD}
-          link="/calendar/template"
+          link="template"
           noTrash
         />
       ) : null}
@@ -28,7 +28,7 @@ const Home: FunctionComponent = () => {
           items={dataList}
           type={TYPE_ACTION_BUTTON.BTN}
           mode={MODE.CARD}
-          link="/calendar/event"
+          link="event"
           noTrash
         />
       ) : null}

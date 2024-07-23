@@ -28,7 +28,7 @@ const CalendarItem: FunctionComponent<CalendarProps> = ({ onClick, item, style }
 
   return (
     <Link
-      to={item?.title && '/calendar/event'}
+      to={item?.title && 'event'}
       state={{ item: item }}
       onClick={onClick}
       onMouseEnter={() => setIsShow(true)}
@@ -36,14 +36,14 @@ const CalendarItem: FunctionComponent<CalendarProps> = ({ onClick, item, style }
       className={classNames(
         ' w-28 h-36 rounded-lg cursor-pointer pl-2 pt-3 pb-1 pr-2 text-xs text-white relative z-10 ',
         style,
-        item?.templates
-          ? getColor[item?.templates] + ' shadow-[0_20px_50px_0px_rgba(0,0,0,0.3)]  shadow-shadow '
+        item?.type
+          ? getColor[item?.type] + ' shadow-[0_20px_50px_0px_rgba(0,0,0,0.3)]  shadow-shadow '
           : 'hover:border border-dashed border-purple2 mt-3'
       )}
     >
-      {item?.title && item?.templates ? (
+      {item?.title && item?.type ? (
         <>
-          <p className=" text-xs">{item?.templates}</p>
+          <p className=" text-xs">{item?.type}</p>
           <p
             className={classNames(
               'mt-2 text-sm font-bold',

@@ -14,12 +14,12 @@ const MainRouter: FunctionComponent = () => {
     <MainProvider>
       <Layout>
         <Routes>
-          <Route path="/calendar" element={<Home />} />
-          <Route path="/calendar/desk" element={<CalendarPage />} />
-          <Route path="/calendar/canban" element={<Canban />} />
-          <Route path="/calendar/search" element={<Search />} />
-          <Route path="/calendar/template" element={<Template />} />
-          <Route path="/calendar/event" element={<Event />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/desk" element={<CalendarPage />} />
+          <Route path="/canban" element={<Canban />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/template" element={<Template />} />
+          <Route path="/event" element={<Event />} />
         </Routes>
       </Layout>
     </MainProvider>

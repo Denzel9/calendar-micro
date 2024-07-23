@@ -12,7 +12,7 @@ interface DefaultProps {
 
 const Default: FunctionComponent<DefaultProps> = ({ mode, type }) => {
   const { dataList } = useEvents()
-  const templateMedia = dataList?.filter((media) => media?.templates === type)
+  const templateMedia = dataList?.filter((media) => media?.type === type)
   return (
     <Section
       items={templateMedia}

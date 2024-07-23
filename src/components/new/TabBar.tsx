@@ -49,7 +49,7 @@ const TabBar: FunctionComponent<TabBarProps> = ({ titles, media }) => {
         </div>
       </div>
       <div className=" mt-5 flex gap-5">
-        {isActive === TABS.ALL &&
+        {(isActive === TABS.ALL_FILMS || isActive === TABS.ALL_BOOKS) &&
           media?.map((media) => {
             return (
               <Media
@@ -59,12 +59,12 @@ const TabBar: FunctionComponent<TabBarProps> = ({ titles, media }) => {
                 author={media?.author}
                 status={media?.status}
                 rate={media?.rate}
-                id={media?.docId}
+                docId={media?.docId}
                 type={media?.type}
               />
             )
           })}
-        {isActive === TABS.CURRENT &&
+        {(isActive === TABS.CURRENT_READING || isActive === TABS.CURRENT_WATCHING) &&
           currentReading?.map((media) => {
             return (
               <Media
@@ -74,7 +74,7 @@ const TabBar: FunctionComponent<TabBarProps> = ({ titles, media }) => {
                 author={media?.author}
                 status={media?.status}
                 rate={media?.rate}
-                id={media?.docId}
+                docId={media?.docId}
                 type={media?.type}
               />
             )
@@ -89,7 +89,7 @@ const TabBar: FunctionComponent<TabBarProps> = ({ titles, media }) => {
                 author={media?.author}
                 status={media?.status}
                 rate={media?.rate}
-                id={media?.docId}
+                docId={media?.docId}
                 type={media?.type}
               />
             )
