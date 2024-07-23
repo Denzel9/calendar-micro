@@ -10,6 +10,7 @@ import Button from '../new/Button'
 const Content: FunctionComponent = () => {
   const { templates } = useTemplates()
   const { setIsOpenTemplateModal, setIsOpenSidebarSheet, setModalFlow, setIsOpenTrash } = useModal()
+  const uniqueTemplate = new Set(templates)
   const handleClick = () => {
     setIsOpenSidebarSheet(false)
     setModalFlow({state: ''})

@@ -23,8 +23,9 @@ export const useEventsService = () => {
     try {
       await addDoc(collection(db, 'calendar'), {
         ...event,
-        userId: user?.docId,
-        author: user?.name,
+        userId: user && user?.docId,
+        author: user && user?.name,
+        date: event?.date || `${today}-${month}-${year}`,
         time: event?.time ? `${event?.time?.hour()}:${event?.time?.minute()}` : '',
       })
     } catch (error: any) {

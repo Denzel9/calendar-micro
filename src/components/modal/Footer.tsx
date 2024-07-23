@@ -33,9 +33,7 @@ const ModalFooter: FunctionComponent<ModalFooterProps> = ({ setClose, data, setD
     if (data?.title) {
       const event = data as IEvent
       const findedEvent = dataList?.find((el) => el?.title === data?.title)
-      const findedTemplate = templates?.find((el) => {
-        if (el?.type === event?.type) return el
-      })
+      const findedTemplate = templates?.find((el) => el?.type === event?.type && el)
       if (findedEvent) {
         setError('Finded some event')
       } else {

@@ -15,7 +15,7 @@ export const useTemplatesService = () => {
     setIsLoading(true)
     try {
       await addDoc(collection(db, 'templates'), {
-        author: user.name,
+        author: user && user.name,
         date: template.date,
         title: template.title,
         text: template.text || '',
@@ -25,7 +25,7 @@ export const useTemplatesService = () => {
         imgLink: template.imgLink || '',
         assign: template.assign || [],
         comments: template.comments || [],
-        userId: user?.docId,
+        userId: user && user?.docId,
       }).then((res) => updateUserTemplates(res.id))
     } catch (error: any) {
       console.log('Error add event:', error)
