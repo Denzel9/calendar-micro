@@ -37,7 +37,7 @@ const Item: FunctionComponent<ItemProps> = ({ item, imgLink, link, mode, type, t
       state={{ item }}
       className={classNames(
         'bg-grey duration-300 ease-in-out relative',
-        mode === MODE.LIST && getColor[elem?.templates],
+        mode === MODE.LIST && getColor[elem?.type],
         mode === MODE.CARD
           ? 'rounded-xl w-32 h-32 min-w-32 hover:-translate-y-1 overflow-hidden '
           : ' border-l p-5 hover:border-l-4'
