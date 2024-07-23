@@ -76,10 +76,11 @@ const ActionButton: FunctionComponent<ActionButtonProps> = ({ status, id, type, 
         <CustomSelect
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          onClick={(el: EStatus) => updateEventStatus(id, el)}
+          setData={(el: EStatus) => updateEventStatus(id, el)}
           list={[...Object.values(EStatus)]}
           isLarge={false}
           value={status}
+          data={undefined}
         />
       )}
       {type === TYPE_ACTION_BUTTON.TRASH && (

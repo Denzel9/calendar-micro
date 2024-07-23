@@ -60,7 +60,7 @@ const CalendarDeskItem: FunctionComponent<CalendarDeskItemProps> = ({ numberMont
               return (
                 <div
                   key={Math.random()}
-                  className={classNames(' w-1 h-1 rounded-xl', getColor[el?.templates])}
+                  className={classNames(' w-1 h-1 rounded-xl', getColor[el?.type])}
                 />
               )
             })}

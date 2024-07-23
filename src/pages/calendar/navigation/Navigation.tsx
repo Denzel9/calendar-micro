@@ -18,9 +18,9 @@ const Navigation: FunctionComponent<{ scrollRef: () => void }> = ({ scrollRef })
       <CustomSelect
         isOpen={isShowDialog}
         setIsOpen={setIsShowDialog}
-        onClick={handleChangeMonth}
+        setData={handleChangeMonth}
         list={months}
-        bgOpacity
+        data={undefined}
         value={`${getMonthName(numberMonth)}, ${year}`}
       />
       <Mode scrollRef={scrollRef} />
